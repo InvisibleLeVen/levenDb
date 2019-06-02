@@ -1,12 +1,10 @@
 #pragma once
 #include <memory>
+#include <string>
 namespace LevenDB {
 	class Status {
 	public:
-		Status() noexcept : status_(nullptr){}
-		Status(const Status& rhs);
-		Status& operator=(const Status& rhs);
-		Status(Status&& rhs) noexcept { this->status_ = rhs.status_; }
+		Status() noexcept : state_(nullptr) {}
 	private:
 		enum Code {
 			kOk = 0,
@@ -19,7 +17,10 @@ namespace LevenDB {
 		//    state_[0..3] == length of message
 		//    state_[4]    == code
 		//    state_[5..]  == message
-		std::shared_ptr<char> status_;
+		std::shared_ptr<std::string> state_;
+		Code code() const {
+			return (state_ == nullptr) ? kOk : static_cast<Code>((*state_)[4]);
+		}
 	};
 
 }
