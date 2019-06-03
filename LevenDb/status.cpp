@@ -1,8 +1,10 @@
-#include "status.h"
-#include "slice.h"
+#include "status.hpp"
 namespace LevenDB {
-	Status Status::NotFound(const Slice & msg, const Slice & msg2 = Slice())
+	std::string Status::ToString() const
 	{
-		return Status();
+		return std::string();
+	}
+	Status::Status(Code code, const Slice& msg, const Slice& msg2) {
+		
 	}
 }
