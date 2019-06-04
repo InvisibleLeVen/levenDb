@@ -23,8 +23,8 @@ namespace LevenDB {
 			return Status(kIOError, msg, msg2);
 		}
 
-		Status() noexcept : state_(nullptr) {}
-		bool ok() const { return (state_ == nullptr); }
+		Status() noexcept : state_(nullptr),c(kOk){}
+		bool ok() const { return (code() == kOk); }
 		bool IsNotFound() const { return code() == kNotFound; }
 		bool IsCorruption() const { return code() == kCorruption; }
 		bool IsIOError() const { return code() == kIOError; }
@@ -40,13 +40,9 @@ namespace LevenDB {
 			kInvalidArgument = 4,
 			kIOError = 5
 		};
-		//    state_[0..3] == length of message
-		//    state_[4]    == code
-		//    state_[5..]  == message
 		std::shared_ptr<std::string> state_;
-		Code code() const {
-			return (state_ == nullptr) ? kOk : static_cast<Code>((*state_)[4]);
-		}
+		Code c;
+		Code code() const {return c;}
 		Status(Code code, const Slice& msg, const Slice& msg2);
 	};
 
