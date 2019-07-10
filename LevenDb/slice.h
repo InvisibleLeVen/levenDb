@@ -9,6 +9,7 @@ namespace LevenDB {
 		Slice(const std::string &s):data_(s.data()),size_(s.size()){}
 		Slice(const char*s):data_(s),size_(strlen(s)){}
 		Slice(const Slice&) = default;
+
 		Slice& operator=(const Slice&) = default;
 		const char * data() const { return data_; }
 		size_t size() const { return size_; }
@@ -53,7 +54,7 @@ namespace LevenDB {
 	inline int Slice::compare(const Slice& b) const {
 		const size_t minSlice = (this->size_ < b.size_) ? size_ : b.size_;
 		bool result = memcmp(this->data_, b.data_, minSlice);
-		if (result == 0) {
+		if (result != 0) {
 			return this->size_ > b.size_, size_ ? 1 : -1;
 		}
 		return result;

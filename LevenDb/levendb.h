@@ -6,6 +6,5 @@ namespace LevenDB {
 	public:
 		DB();
 		DB(string &);
-		virtual 
 	};
 }

@@ -1,4 +1,4 @@
-#include "status.hpp"
+#include "status.h"
 namespace LevenDB {
 	std::string Status::ToString() const
 	{
@@ -30,13 +30,14 @@ namespace LevenDB {
 		}
 		return result.append(*state_);
 	}
+	//msg内容都放在state_中
 	Status::Status(Code code, const Slice& msg, const Slice& msg2) {
 		assert(code != kOk);
 		c = code;
 		if (msg2.size() != 0)
 			state_ = std::make_shared<std::string>((msg.ToString()));
 		else
-			state_ = std::make_shared<std::string>((msg.ToString().append(msg2.ToString())));
+			state_ = std::make_shared<std::string>(((msg.ToString()+": ").append(msg2.ToString())));
 		
 	}
 }
