@@ -24,7 +24,7 @@ namespace LevenDB {
 		}
 
 		Status() noexcept : state_(nullptr),c(kOk){}
-		bool ok() const { return (code() == kOk); }
+		bool IsOk() const { return (code() == kOk); }
 		bool IsNotFound() const { return code() == kNotFound; }
 		bool IsCorruption() const { return code() == kCorruption; }
 		bool IsIOError() const { return code() == kIOError; }
