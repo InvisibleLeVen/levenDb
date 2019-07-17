@@ -1,1 +1,4 @@
-﻿LINK : fatal error LNK1561: 必须定义入口点
+﻿  status_test.cpp
+  test.cpp
+  正在生成代码...
+  LevenDBTest.vcxproj -> D:\c++disassembly\LevenDb\Debug\LevenDBTest.exe

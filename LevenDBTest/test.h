@@ -1,7 +1,7 @@
 #pragma once
 #include "../LevenDb/status.h"
+#include <iostream>
 #include <sstream>
-#include <functional>
 namespace LevenDB {
 	namespace test {
 		int RunAllTests();
@@ -17,7 +17,8 @@ namespace LevenDB {
 			Tester(const std::string & f,int l): ok_(true),fname_(f),line_(l){}
 			~Tester() {
 				if (!ok_) {
-					fprintf(stderr, "%s:%d:%s\n", fname_, line_, ss_);
+					std::cerr << fname_ << ":" << line_ << ":" << ss_.str() << std::endl;
+					//fprintf(stderr, "%s:%d:%s\n", fname_, line_, ss_);
 					exit(1);
 				}
 			}
@@ -59,7 +60,7 @@ namespace LevenDB {
 				return std::move(*this);
 			}
 		};
-#define ASSERT_TRUE(c) ::LevenDB::test::Tester(__FILE__,__LINE__).Is((c),#c)
+#define ASSERT_TRUE(c) ::LevenDB::test::Tester(__FILE__,__LINE__).Set((c),#c)
 #define	ASSERT_OK(s) ::LevenDB::test::Tester(__FILE__,__LINE__).IsOk(s)
 #define ASSERT_EQ(a,b) ::LevenDB::test::Tester(__FILE__,__LINE__).IsEq((a),(b))
 #define ASSERT_NE(a,b)::LevenDB::test::Tester(__FILE__,__LINE__).IsNe((a),(b))
@@ -68,7 +69,7 @@ namespace LevenDB {
 #define ASSERT_LE(a,b)::LevenDB::test::Tester(__FILE__,__LINE__).IsLe((a),(b))
 #define ASSERT_LT(a,b)::LevenDB::test::Tester(__FILE__,__LINE__).IsLt((a),(b))
 
-#define TCONCAT(a,b) TCONNCAT1(a,b)
+#define TCONCAT(a,b) TCONCAT1(a,b)
 #define TCONCAT1(a,b) a##b
 
 #define TEST(base,name)															\
@@ -76,13 +77,14 @@ namespace LevenDB {
 		public:																	\
 			void _Run();														\
 			static void _RunIt() {												\
-				TCONNCAT(_Test_, name) t;										\
-				t.Run();														\
+				TCONCAT(_Test_, name) t;										\
+				t._Run();														\
 			}																	\
 		};																		\
-		bool TCONCAT(_Test_ignored_, name) = ::leveldb::test::RegisterTest(		\
+		bool TCONCAT(_Test_ignored_, name) = ::LevenDB::test::RegisterTest(		\
 			#base, #name, &TCONCAT(_Test_, name)::_RunIt);						\
-		void TCONCAT(_Test_, name)::_Run();
-		bool RegisterTest(const std::string& base, const std::string& name, std::function<void()>);//这里可以用std::function
+		void TCONCAT(_Test_, name)::_Run()
+
+		bool RegisterTest(const std::string& base, const std::string& name, void(*func)());
 	}
 }
