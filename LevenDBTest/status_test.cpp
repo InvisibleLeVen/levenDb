@@ -26,7 +26,4 @@ namespace LevenDB {
 
 int main() {
 	return LevenDB::test::RunAllTests();
-	std::cin.ignore();
-	std::cin.ignore();
-	return 0;
 }
