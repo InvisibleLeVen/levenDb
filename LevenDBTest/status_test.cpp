@@ -1,5 +1,4 @@
 #include "test.h"
-#include <iostream>
 #define MACRO_STRING(x)     #x
 #define MACRO_EXPAND(x)     MACRO_STRING(x)
 namespace LevenDB {
@@ -26,7 +25,8 @@ namespace LevenDB {
 }
 
 int main() {
-	
+	return LevenDB::test::RunAllTests();
+	std::cin.ignore();
 	std::cin.ignore();
 	return 0;
 }

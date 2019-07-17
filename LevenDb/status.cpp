@@ -7,7 +7,7 @@ namespace LevenDB {
 		switch (code())
 		{
 		case kNotFound:
-			result = "NotFound :";
+			result = "NotFound: ";
 			break;
 		case kCorruption:
 			result = "Corruption: ";
@@ -34,7 +34,7 @@ namespace LevenDB {
 	Status::Status(Code code, const Slice& msg, const Slice& msg2) {
 		assert(code != kOk);
 		c = code;
-		if (msg2.size() != 0)
+		if (msg2.size() == 0)
 			state_ = std::make_shared<std::string>((msg.ToString()));
 		else
 			state_ = std::make_shared<std::string>(((msg.ToString()+": ").append(msg2.ToString())));
