@@ -51,7 +51,7 @@ namespace LevenDB {
 		SequentialFile(const SequentialFile&) = delete;
 		SequentialFile& operator=(const SequentialFile&) = delete;
 		virtual ~SequentialFile();
-		virtual Status Read(size_t n, Slice& resukt, std::string& scratch) = 0;
+		virtual Status Read(size_t n, Slice& result, char* scratch) = 0;
 		virtual Status Skip(uint64_t& n) = 0;
 	};
 	//½Ó¿ÚÀà
